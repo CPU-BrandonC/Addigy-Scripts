@@ -31,11 +31,28 @@ SetHomeFolder "$LoggedInUser"
 echo "Office-Reset: Running as: $LoggedInUser; Home Folder: $HOME"
 
 echo "Office-Reset: Quitting all apps MORE gracefully"
-osascript -e 'tell application "Microsoft Word" to quit saving yes'
+osascript -e 'tell application "Microsoft Word" to quit'
+if [[ $? != "0" ]]; then
+    echo "Microsoft Word failed to quit. Did user click cancel? $(tput bold)BAILING$(tput sgr0)"
+    exit 1
+fi
 osascript -e 'tell application "Microsoft Excel" to quit saving yes'
-osascript -e 'tell application "Microsoft PowerPoint" to quit saving yes'
-osascript -e 'tell application "Microsoft Outlook" to quit saving yes'
-osascript -e 'tell application "Microsoft OneNote" to quit saving yes'
+if [[ $? != "0" ]]; then
+    echo "Microsoft Excel failed to quit. Did user click cancel? $(tput bold)BAILING$(tput sgr0)"
+    exit 1
+fi
+osascript -e 'tell application "Microsoft PowerPoint" to quit'
+if [[ $? != "0" ]]; then
+    echo "Microsoft PowerPoint failed to quit. Did user click cancel? $(tput bold)BAILING$(tput sgr0)"
+    exit 1
+fi
+osascript -e 'tell application "Microsoft Outlook" to quit'
+if [[ $? != "0" ]]; then
+    echo "Microsoft Outlook failed to quit. Did user click cancel? $(tput bold)BAILING$(tput sgr0)"
+    exit 1
+fi
+# And screw OneNote lol. No logic for you.
+/usr/bin/pkill -HUP 'Microsoft OneNote'
 
 KeychainHasLogin=$(/usr/bin/security list-keychains | grep 'login.keychain')
 if [ "$KeychainHasLogin" = "" ]; then
