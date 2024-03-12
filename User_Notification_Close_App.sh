@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Adjust these variables as they will replace the text in the flags
-title="A Notification"
-description="Example of a description text"
-acceptText="Accept"
-closeText="Close"
+title="Outlook Sign-In Reset"
+description="A technician from CPU is asking to reset your Office/Outlook to fix MFA issues. Please save any open documents."
+acceptText="Quit Office"
+closeText="Maybe Later"
 timeOut=600
 forefront="False"
 
