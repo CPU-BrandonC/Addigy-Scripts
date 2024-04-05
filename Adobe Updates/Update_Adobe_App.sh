@@ -57,8 +57,22 @@ if [ -f "/usr/local/bin/dialog" ]
 then
     echo "INFO: SwiftDialog is installed."
 else
-    echo "ERROR: SwiftDialog NOT installed."
-    exit 1
+    echo "WARNING: SwiftDialog NOT installed."
+    # Checks if Installomator is installed before attempting to install SwiftDialog
+    if [ -f "/usr/local/Installomator/Installomator.sh" ]
+    then
+        echo "INFO: Installing SwiftDialog."
+        echo "INFO: Waiting up to 120 seconds for SwiftDialog to install."
+        /usr/local/Installomator/Installomator.sh dialog DEBUG=0 PROMPT_TIMEOUT=120
+        if [ $? -ne 0 ]
+        then
+            echo "ERROR: SwiftDialog installation failed. Unable to proceed with update."
+            exit 1
+        fi
+    else
+        echo "ERROR: Installomator not installed. Unable to proceed with update."
+        exit 1
+    fi
 fi
 
 # Check for Adobe Remote Update Manager
@@ -97,7 +111,7 @@ then
                 count=$((count+1))
                 if [ $count -ge $timeout ]
                 then
-                    echo "WARNING: Timeout reached. The user did not save their work on time. $(tput bold)BAILING.$(tput sgr0)"
+                    echo "ERROR: Timeout reached. The user did not save their work on time. Unable to proceed with update."
                     break
                 fi
             done
