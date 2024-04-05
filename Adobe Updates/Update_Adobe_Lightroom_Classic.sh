@@ -24,9 +24,9 @@
 # Adobe Media Encoder 2024     | AME  |  24
 
 # Change these to fit your needs
-version_to_update="25" # The version does not necessarily match the year
-app_full_name="Adobe Photoshop 2024" # This must exactly match the app name
-sap_code="PHSP" # This is the 3-4 character code Adobe assigns to each app in RUM
+version_to_update="13" # The version does not necessarily match the year
+app_full_name="Adobe Lightroom Classic" # This must exactly match the app name
+sap_code="LRCC" # This is the 3-4 character code Adobe assigns to each app in RUM
 timeout=300 # How long in seconds the user should be given to save their work. It may take longer than expected to timeout based on proccessing speed.
 
 # Dialog options

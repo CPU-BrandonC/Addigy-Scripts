@@ -16,17 +16,17 @@
 # Adobe Premiere Rush          | RUSH |  2    <----This app doesn't have the year in the title 🤷‍♂️
 # Adobe Premiere Pro 2024      | PPRO |  24
 # Adobe Audition 2024          | AUDT |  24
-# Adobe Lightroom CC           | LRCC |  7    <----This app doesn't have the year in the title 🤷‍♂️
-# Adobe Lightroom Classic      | LTRM |  13   <----This app doesn't have the year in the title 🤷‍♂️
+# Adobe Lightroom 2024         | LRCC |  7
+# Adobe Lightroom Classic 2024 | LTRM |  13
 # Adobe After Effects 2024     | AEFT |  24
 # Adobe Bridge 2024            | KBRG |  14
 # Adobe Animate                | FLPR |  24
 # Adobe Media Encoder 2024     | AME  |  24
 
 # Change these to fit your needs
-version_to_update="25" # The version does not necessarily match the year
-app_full_name="Adobe Photoshop 2024" # This must exactly match the app name
-sap_code="PHSP" # This is the 3-4 character code Adobe assigns to each app in RUM
+version_to_update="2" # The version does not necessarily match the year
+app_full_name="Adobe Premiere Rush" # This must exactly match the app name
+sap_code="RUSH" # This is the 3-4 character code Adobe assigns to each app in RUM
 timeout=300 # How long in seconds the user should be given to save their work. It may take longer than expected to timeout based on proccessing speed.
 
 # Dialog options
@@ -55,18 +55,18 @@ fi
 # Update command
 update_app() {
     # Send Toast
-    /usr/local/bin/dialog --notification --title "Update started" --message "$app_full_name update started." --icon "/Applications/$app_full_name/$app_full_name.app"
+    /usr/local/bin/dialog --notification --title "Update started" --message "$app_full_name update started." --icon "/Applications/$app_full_name $version_to_update.0/$app_full_name.app"
     /usr/local/bin/RemoteUpdateManager "--productVersions=$sap_code#$version_to_update.0"
     case $? in
         0)
             echo "INFO: $app_full_name update successful."
             # Sends toast 
-            /usr/local/bin/dialog --notification --title "Update complete" --message "$app_full_name update complete." --icon "/Applications/$app_full_name/$app_full_name.app"
+            /usr/local/bin/dialog --notification --title "Update complete" --message "$app_full_name update complete." --icon "/Applications/$app_full_name $version_to_update.0/$app_full_name.app"
             # Reopen App
             if [[ $app_open == "true" ]]
             then
                 echo "INFO: Reopening $app_full_name."
-                sudo -u $current_user open "/Applications/$app_full_name/$app_full_name.app"
+                sudo -u $current_user open "/Applications/$app_full_name $version_to_update.0/$app_full_name.app"
                 exit 0
             else
                 echo "INFO: $app_full_name was not open when update was started. No action will be taken."
@@ -74,7 +74,7 @@ update_app() {
             fi
             ;;
         2)
-            echo "ERROR: $app_full_name update failed because it was open. It may have been opened by the user before the update was completed."
+            echo "ERROR: $app_full_name update failed because it was open. It may have been opened by the user before the update way complete."
             exit 2
             ;;
         *)
