@@ -11,7 +11,7 @@
 # NAME                         | SAP  |  Version
 # ---------------------------- |------|----------
 # Adobe Photoshop 2024         | PHSP |  25
-# Adobe Illustrator 2024       | ILST |  28
+# Adobe Illustrator            | ILST |  28   <----This app doesn't have the year in the title 🤷‍♂️
 # Adobe InDesign 2024          | IDSN |  19
 # Adobe Premiere Rush          | RUSH |  2    <----This app doesn't have the year in the title 🤷‍♂️
 # Adobe Premiere Pro 2024      | PPRO |  24
@@ -24,9 +24,9 @@
 # Adobe Media Encoder 2024     | AME  |  24
 
 # Change these to fit your needs
-version_to_update="13" # The version does not necessarily match the year
-app_full_name="Adobe Lightroom Classic" # This must exactly match the app name
-sap_code="LTRM" # This is the 3-4 character code Adobe assigns to each app in RUM
+version_to_update="24" # The version does not necessarily match the year
+app_full_name="Adobe After Effects 2024" # This must exactly match the app name
+sap_code="AEFT" # This is the 3-4 character code Adobe assigns to each app in RUM
 timeout=300 # How long in seconds the user should be given to save their work. It may take longer than expected to timeout based on proccessing speed.
 
 # Dialog options
@@ -56,7 +56,7 @@ fi
 update_app() {
     # Send Toast
     /usr/local/bin/dialog --notification --title "Update started" --message "$app_full_name update started." --icon "/Applications/$app_full_name/$app_full_name.app"
-    /usr/local/bin/RemoteUpdateManager "--productVersions=$sap_code"
+    /usr/local/bin/RemoteUpdateManager "--productVersions=$sap_code#$version_to_update.0"
     case $? in
         0)
             echo "INFO: $app_full_name update successful."
@@ -118,7 +118,7 @@ else
 fi
 
 # Check if app is currently open
-if pgrep "$app_full_name" > /dev/null
+if pgrep "After Effects" > /dev/null # This app is dumb
 then
     app_open="true"
     echo "WARNING: $app_full_name is open."
@@ -139,7 +139,7 @@ then
             echo "INFO: Waiting up to $timeout seconds for user to save their work..."
             # Check that app is actually closed. Wait for timeout.
             count=0
-            while pgrep "$app_full_name" > /dev/null
+            while pgrep "After Effects" > /dev/null # This app is dumb
             do
                 sleep 1
                 count=$((count+1))

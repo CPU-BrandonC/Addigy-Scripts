@@ -11,7 +11,7 @@
 # NAME                         | SAP  |  Version
 # ---------------------------- |------|----------
 # Adobe Photoshop 2024         | PHSP |  25
-# Adobe Illustrator 2024       | ILST |  28
+# Adobe Illustrator 2024       | ILST |  28   <----This app doesn't have the year in the title 🤷‍♂️
 # Adobe InDesign 2024          | IDSN |  19
 # Adobe Premiere Rush          | RUSH |  2    <----This app doesn't have the year in the title 🤷‍♂️
 # Adobe Premiere Pro 2024      | PPRO |  24
@@ -24,16 +24,16 @@
 # Adobe Media Encoder 2024     | AME  |  24
 
 # Change these to fit your needs
-version_to_update="13" # The version does not necessarily match the year
-app_full_name="Adobe Lightroom Classic" # This must exactly match the app name
-sap_code="LTRM" # This is the 3-4 character code Adobe assigns to each app in RUM
+version_to_update="28" # The version does not necessarily match the year
+app_full_name="Adobe Illustrator" # This must exactly match the app name
+sap_code="ILST" # This is the 3-4 character code Adobe assigns to each app in RUM
 timeout=300 # How long in seconds the user should be given to save their work. It may take longer than expected to timeout based on proccessing speed.
 
 # Dialog options
 dialog_button1_text="Install Update"
 dialog_button2_text="Cancel"
 dialog_title="Update Available"
-dialog_message="Update available for $app_full_name. Clicking $dialog_button1_text will quit and update $app_full_name. The update can take up to 20 minutes and will automatically reopen $app_full_name."
+dialog_message="Update available for $app_full_name 2024. Clicking $dialog_button1_text will quit and update $app_full_name 2024. The update can take up to 20 minutes and will automatically reopen $app_full_name 2024."
 
 # Don't change anything after this line
 
@@ -55,18 +55,18 @@ fi
 # Update command
 update_app() {
     # Send Toast
-    /usr/local/bin/dialog --notification --title "Update started" --message "$app_full_name update started." --icon "/Applications/$app_full_name/$app_full_name.app"
-    /usr/local/bin/RemoteUpdateManager "--productVersions=$sap_code"
+    /usr/local/bin/dialog --notification --title "Update started" --message "$app_full_name 2024 update started." --icon "/Applications/$app_full_name 2024/$app_full_name.app"
+    /usr/local/bin/RemoteUpdateManager "--productVersions=$sap_code#$version_to_update.0"
     case $? in
         0)
             echo "INFO: $app_full_name update successful."
             # Sends toast 
-            /usr/local/bin/dialog --notification --title "Update complete" --message "$app_full_name update complete." --icon "/Applications/$app_full_name/$app_full_name.app"
+            /usr/local/bin/dialog --notification --title "Update complete" --message "$app_full_name update complete." --icon "/Applications/$app_full_name 2024/$app_full_name.app"
             # Reopen App
             if [[ $app_open == "true" ]]
             then
                 echo "INFO: Reopening $app_full_name."
-                sudo -u $current_user open "/Applications/$app_full_name/$app_full_name.app"
+                sudo -u $current_user open "/Applications/$app_full_name 2024/$app_full_name.app"
                 exit 0
             else
                 echo "INFO: $app_full_name was not open when update was started. No action will be taken."
@@ -128,7 +128,7 @@ then
         --message "$dialog_message" \
         --button1text "$dialog_button1_text" \
         --button2text "$dialog_button2_text" \
-        --icon "/Applications/$app_full_name/$app_full_name.app" \
+        --icon "/Applications/$app_full_name 2024/$app_full_name.app" \
         --moveable \
         --mini
     case $? in
