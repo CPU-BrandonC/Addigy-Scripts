@@ -1,10 +1,11 @@
 #!/bin/zsh
 
-current_user=$( echo "show State:/Users/ConsoleUser" | scutil | awk '/Name :/ { print $3 }' )
+current_user=""
 
 while [ -z $current_user ]
 do
-    sleep 2
+    sleep 5
+    current_user=$( echo "show State:/Users/ConsoleUser" | scutil | awk '/Name :/ { print $3 }' )
 done
 
 echo "INFO: Current user is $current_user"
