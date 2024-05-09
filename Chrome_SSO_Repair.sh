@@ -36,18 +36,25 @@ else
     exit 1
 fi
 
+echo "INFO: Waiting 60 seconds to ensure no race conditions when creating new folders..." >> /var/log/chrome_sso_repair.log
+sleep 60
+
 echo "INFO: Verifying Google Chrome SSO Extension directory exists..." 
 if [[ -d "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts" ]]
 then
     echo "INFO: Directory exists." >> /var/log/chrome_sso_repair.log
 else
-    echo "Directory does not exist. Creating new directory..." >> /var/log/chrome_sso_repair.log
-    mkdir "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts"
+    echo "INFO: Directory does not exist. Creating new directory..." >> /var/log/chrome_sso_repair.log
+    mkdir -p "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts" 2>> /var/log/chrome_sso_repair.log
+    echo "INFO: Changing ownership to $current_user..."
+    chown -R $current_user:staff "/Users/$current_user/Library/Application Support/Google" 2>> /var/log/chrome_sso_repair.log
 fi
 
 echo "INFO: Copying SSO Extension file to Google Chrome directory..." >> /var/log/chrome_sso_repair.log
+cp "/Applications/Company Portal.app/Contents/Resources/com.microsoft.browsercore.json" "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/" 2>> /var/log/chrome_sso_repair.log
+echo "INFO: Changing ownership to $current_user..."
+chown $current_user:staff "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/"
 
-sudo cp "/Applications/Company Portal.app/Contents/Resources/com.microsoft.browsercore.json" "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/"  >> /var/log/chrome_sso_repair.log
 
 if [ -f "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/com.microsoft.browsercore.json" ]
 then
