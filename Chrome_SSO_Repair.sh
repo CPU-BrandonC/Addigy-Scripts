@@ -36,9 +36,18 @@ else
     exit 1
 fi
 
+echo "INFO: Verifying Google Chrome SSO Extension directory exists..." 
+if [[ -d "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts" ]]
+then
+    echo "INFO: Directory exists." >> /var/log/chrome_sso_repair.log
+else
+    echo "Directory does not exist. Creating new directory..." >> /var/log/chrome_sso_repair.log
+    mkdir "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts"
+fi
+
 echo "INFO: Copying SSO Extension file to Google Chrome directory..." >> /var/log/chrome_sso_repair.log
 
-cp "/Applications/Company Portal.app/Contents/Resources/com.microsoft.browsercore.json" "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/"
+sudo cp "/Applications/Company Portal.app/Contents/Resources/com.microsoft.browsercore.json" "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/"  >> /var/log/chrome_sso_repair.log
 
 if [ -f "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/com.microsoft.browsercore.json" ]
 then
