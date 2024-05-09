@@ -53,14 +53,14 @@ then
 else
     echo "INFO: Directory does not exist. Creating new directory..." >> /var/log/chrome_sso_repair.log
     mkdir -p "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts" 2>> /var/log/chrome_sso_repair.log
-    echo "INFO: Changing ownership to $current_user..."
+    echo "INFO: Changing ownership to $current_user..." >> /var/log/chrome_sso_repair.log
     chown -R $current_user:staff "/Users/$current_user/Library/Application Support/Google" 2>> /var/log/chrome_sso_repair.log
 fi
 
 echo "INFO: Copying SSO Extension file to Google Chrome directory..." >> /var/log/chrome_sso_repair.log
 cp "/Applications/Company Portal.app/Contents/Resources/com.microsoft.browsercore.json" "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/" 2>> /var/log/chrome_sso_repair.log
-echo "INFO: Changing ownership to $current_user..."
-chown $current_user:staff "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/"
+echo "INFO: Changing ownership to $current_user..." >> /var/log/chrome_sso_repair.log
+chown $current_user:staff "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/" 2>> /var/log/chrome_sso_repair.log
 
 
 if [ -f "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts/com.microsoft.browsercore.json" ]
