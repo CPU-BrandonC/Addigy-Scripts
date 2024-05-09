@@ -39,6 +39,13 @@ fi
 echo "INFO: Waiting 60 seconds to ensure no race conditions when creating new folders..." >> /var/log/chrome_sso_repair.log
 sleep 60
 
+echo "INFO: Verifying Application Support Folder exists..."
+if [[ ! -d "/Users/$current_user/Library/Application Support" ]]
+then
+    echo "ERROR: Application Support Folder does not exist!"
+    exit 1
+fi
+
 echo "INFO: Verifying Google Chrome SSO Extension directory exists..." 
 if [[ -d "/Users/$current_user/Library/Application Support/Google/Chrome/NativeMessagingHosts" ]]
 then
