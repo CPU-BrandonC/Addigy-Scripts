@@ -36,8 +36,8 @@ else
     exit 1
 fi
 
-echo "INFO: Waiting 60 seconds to ensure no race conditions when creating new folders..." >> /var/log/chrome_sso_repair.log
-sleep 60
+echo "INFO: Waiting 10 seconds to ensure no race conditions when creating new folders..." >> /var/log/chrome_sso_repair.log
+sleep 10
 
 echo "INFO: Verifying Application Support Folder exists..."
 if [[ ! -d "/Users/$current_user/Library/Application Support" ]]
