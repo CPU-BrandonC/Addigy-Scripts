@@ -16,7 +16,7 @@ fi
 if [[ -d "/Applications/Python $python_version" ]]
 then
     echo "Removing Python application directory..."
-    rm - rf "/Applications/Python $python_version"
+    rm -rf "/Applications/Python $python_version"
 else
     echo "Python Applications directory does not exist! Proceeding..."
 fi
