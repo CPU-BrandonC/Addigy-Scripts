@@ -10,18 +10,18 @@
 current_version="2.0.0"
 
 # The printer name displayed to users, once printer has been deployed this should not change, as changing the name will result in duplicate printers.
-display_name="Upstairs Printer (Fiery)"
+display_name="Upstairs Printer"
 
 # Physical location of the printer.
 location="3rd floor"
 
 # Protocol used to connect to the printer (dnssd, lpd, ipp, ipps, http, socket).
-protocol="dnssd://Xerox%20EX-c%20C9065-70%20Printer%202.0%2866%3A84%3A87%29._printer._tcp.local."
+protocol="ipp"
 
 # Network address of the printer can be an IP address, hostname or DNS-SD address.
 # DNS-SD address example: "HP%20LaserJet%20400%20colorMFP%20M475dn%20(626EDC)._ipp._tcp.local./?uuid=434e4438-4637-3934-3737-a45d36626edc"
 # 
-address="172.31.1.1"
+address="192.168.0.243"
 
 # Use the 'Everywhere' model - soon to be the only supported model in CUPS. We assume that the IPP path is /ipp/print below.
 use_ipp_everywhere="true"
@@ -79,7 +79,7 @@ fi
 
 # Install the printer.
 if [ "$use_ipp_everywhere" = "true" ]; then
-    /usr/sbin/lpadmin -p "$name" -L "$location" -D "$display_name" -v "${protocol}"://"${address}"/ipp/print -m everywhere -E -o landscape -o printer-is-shared=false -o printer-error-policy=abort-job
+    /usr/sbin/lpadmin -p "$name" -L "$location" -D "$display_name" -v "${protocol}"://"${address}"/ipp/print -m everywhere -E -o landscape -o printer-is-shared=false #(this was causing errors) -o printer-error-policy=abort-job
 else
     /usr/sbin/lpadmin -p "$name" -L "$location" -D "$display_name" -v "${protocol}"://"${address}" -P "$driver_ppd" -E -o landscape -o printer-is-shared=false -o printer-error-policy=abort-job -o "$option_1" -o "$option_2" -o "$option_3"
 fi

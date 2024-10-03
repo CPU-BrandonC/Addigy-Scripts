@@ -6,10 +6,10 @@
 
 ### Printer Variables ###
 current_version="2.0.0"
-display_name="Upstairs Printer (Fiery)"
-address="dnssd://Xerox%20EX-c%20C9065-70%20Printer%202.0%2866%3A84%3A87%29._printer._tcp.local."
+display_name="Upstairs Printer"
+address="192.168.0.243"
 use_ipp_everywhere=true
-protocol="dnssd"
+protocol="ipp"
 
 ### Nothing below this line needs to change. ###
 
