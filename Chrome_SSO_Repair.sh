@@ -1,8 +1,13 @@
 #!/bin/zsh
 
+# This script is required to run after Company Portal AND Google Chrome is installed for the Microsoft SSO Chrome extension to work.
+# Additional details can be found in the following URL under "Troubleshooting Google Chrome SSO issues"
+# https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension?tabs=macOS14#troubleshoot-google-chrome-sso-issues
+
 current_user=""
 
-# log to disk
+# Log to disk
+# You may review this log in the Console app if you have issues. Addigy does not show logs from "Smart Software" by default.
 if [[ -f "/var/log/chrome_sso_repair.log" ]]
 then
     echo "Start of logging history.." > /var/log/chrome_sso_repair.log
@@ -10,6 +15,7 @@ else
     touch /var/log/chrome_sso_repair.log
 fi
 
+# Waits until the user is logged in before running the script. The Chrome extension requires the SSO extension JSON to be installed in the user's folder.
 while [ -z $current_user ]
 do
     sleep 5
@@ -42,7 +48,7 @@ sleep 10
 echo "INFO: Verifying Application Support Folder exists..."
 if [[ ! -d "/Users/$current_user/Library/Application Support" ]]
 then
-    echo "ERROR: Application Support Folder does not exist!"
+    echo "ERROR: Application Support Folder does not exist!" >> /var/log/chrome_sso_repair.log
     exit 1
 fi
 
